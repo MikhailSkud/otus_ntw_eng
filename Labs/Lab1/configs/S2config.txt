@@ -104,7 +104,7 @@ interface Vlan8
  no ip address
 !
 !
-no ip http server
+ip default-gateway 192.168.3.1
 !
 !
 !
