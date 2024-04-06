@@ -85,8 +85,8 @@ interface Vlan7
 !
 interface Vlan8
  description NATIVE
- no ip address
 !
+ip default-gateway 192.168.3.1
 !
 no ip http server
 !
