@@ -43,7 +43,7 @@ vlan internal allocation policy ascending
 !
 !
 interface Ethernet0/0
- description Trunk to S2
+ description Trunk to S3
  switchport trunk encapsulation dot1q
  switchport trunk native vlan 8
  switchport trunk allowed vlan 3,4,8
