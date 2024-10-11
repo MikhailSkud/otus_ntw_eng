@@ -1,0 +1,130 @@
+
+R2#sh run
+Building configuration...
+
+Current configuration : 3480 bytes
+!
+! Last configuration change at 01:36:57 MSK Sun Oct 6 2024
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$Wo5w$IoKSNPhJ/EVdlpIzCHhVh0
+!
+aaa new-model
+!
+
+!
+aaa session-id common
+ethernet lmi ce
+!
+
+!
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+
+!
+username admin privilege 15 secret 5 $1$3eG7$XThz5ZYzDZuV0IlIb44AB/
+!
+redundancy
+!
+
+!
+interface GigabitEthernet0/0
+ description to R1
+ ip address 10.0.0.2 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ description to S2
+ ip address 192.168.1.97 255.255.255.240
+ ip helper-address 10.0.0.1
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+!
+
+!
+control-plane
+!
+banner exec ^C
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+
+banner login ^C
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+!
+line con 0
+ exec-timeout 15 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ transport input telnet
+!
+no scheduler allocate
+!
+end
+
+R2#

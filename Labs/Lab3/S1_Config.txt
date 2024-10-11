@@ -1,0 +1,167 @@
+SW1>en
+Password:
+SW1#sh run
+Building configuration...
+
+Current configuration : 4459 bytes
+!
+! Last configuration change at 01:02:06 MSK Sun Oct 6 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service compress-config
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 4 06YFDUHH61wAE/kLkDq9BGho1QM5EnRtoyr8cHAUg.2
+!
+username admin privilege 15 secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
+aaa new-model
+!
+
+!
+aaa session-id common
+clock timezone MSK 3 0
+!
+
+!
+no ip domain-lookup
+ip cef
+no ipv6 cef
+!
+
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+
+!
+interface GigabitEthernet0/0
+ description To Clients
+ switchport access vlan 100
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ description To R1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 1000
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ description to Parking_Lot
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ description to Parking_Lot
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ description to Parking_Lot
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ description to Parking_Lot
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ description to Parking_Lot
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ description to Parking_Lot
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface Vlan100
+ description Clients
+ no ip address
+!
+interface Vlan200
+ ip address 192.168.1.66 255.255.255.224
+!
+interface Vlan999
+ description Parking_Lot
+ no ip address
+!
+interface Vlan1000
+ description Native
+ no ip address
+!
+ip default-gateway 192.168.1.1
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+control-plane
+!
+banner exec ^CC
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+banner login ^CC
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+!
+line con 0
+ exec-timeout 15 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ transport input telnet
+!
+!
+end

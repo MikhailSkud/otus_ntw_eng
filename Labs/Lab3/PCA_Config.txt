@@ -1,0 +1,21 @@
+
+PC-A> sh ip
+
+NAME        : PC-A[1]
+IP/MASK     : 192.168.1.6/26
+GATEWAY     : 192.168.1.1
+DNS         :
+DHCP SERVER : 192.168.1.1
+DHCP LEASE  : 159598, 217800/108900/190575
+DOMAIN NAME : otus-lab.com
+MAC         : 00:50:79:66:68:03
+LPORT       : 20000
+RHOST:PORT  : 127.0.0.1:30000
+MTU         : 1500
+
+PC-A> sh ip all
+
+NAME   IP/MASK              GATEWAY           MAC                DNS
+PC-A   192.168.1.6/26       192.168.1.1       00:50:79:66:68:03
+
+PC-A>
