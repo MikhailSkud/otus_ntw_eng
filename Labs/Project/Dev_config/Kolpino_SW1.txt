@@ -1,0 +1,206 @@
+Kolpino_SW1#sh run
+Building configuration...
+
+Current configuration : 4614 bytes
+!
+! Last configuration change at 23:23:05 MSK Thu Oct 24 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service compress-config
+!
+hostname Kolpino_SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 4 06YFDUHH61wAE/kLkDq9BGho1QM5EnRtoyr8cHAUg.2
+!
+username admin privilege 15 secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
+aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone MSK 3 0
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip cef
+no ipv6 cef
+!
+!
+archive
+ log config
+  hidekeys
+ path ftp://10.60.48.8/$h-$t
+ write-memory
+!
+spanning-tree mode mst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ description to Kolpino_SW
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ description Ip_Phone
+ switchport access vlan 16
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ description Users
+ switchport access vlan 15
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ description Net_Printer
+ switchport access vlan 15
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ description MGMT
+ switchport access vlan 60
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface Vlan15
+ description Users
+ no ip address
+!
+interface Vlan16
+ description Voice
+ no ip address
+!
+interface Vlan60
+ description MGMT
+ ip address 10.60.48.3 255.255.255.224
+!
+interface Vlan88
+ description Security
+ no ip address
+!
+interface Vlan128
+ description WiFi_APs
+ no ip address
+!
+interface Vlan129
+ description WiFi_Users
+ no ip address
+!
+ip default-gateway 10.60.48.2
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+ip ftp username ciscoftp
+ip ftp password 7 070C285F4D06
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec ^CC
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+!
+banner login ^CC
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+!
+line con 0
+ exec-timeout 15 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ transport input telnet
+!
+ntp update-calendar
+ntp server 10.60.48.1
+!
+end
+
+Kolpino_SW1#
