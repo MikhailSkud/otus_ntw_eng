@@ -2,7 +2,7 @@
 
 [Лабораторная работа № 1](/Labs/Lab1/README.md)
 
-[Лабораторная работа № 2](/Labs/Lab2/README.md)
+[Лабораторная работа № 2](/Labs/Lab2/Readme.md)
 
 [Лабораторная работа № 3](/Labs/Lab3/README.md)
 
