@@ -1,0 +1,212 @@
+Press RETURN to get started.
+
+C
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+
+R1>en
+Password:
+R1#sh run
+Building configuration...
+
+Current configuration : 3527 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$Wo5w$IoKSNPhJ/EVdlpIzCHhVh0
+!
+aaa new-model
+!
+
+!
+aaa session-id common
+ethernet lmi ce
+!
+!
+!
+clock timezone MSK 3 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+no ip domain lookup
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+username admin privilege 15 secret 5 $1$3eG7$XThz5ZYzDZuV0IlIb44AB/
+!
+redundancy
+!
+!
+interface GigabitEthernet0/0
+ description to R2
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:DB8:ACAD:2::/64 eui-64
+!
+interface GigabitEthernet0/1
+ description to S1
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:DB8:ACAD:1::/64 eui-64
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ipv6 route 2001:DB8:ACAD:3::/64 2001:DB8:ACAD:2::2
+!
+!
+control-plane
+!
+banner exec ^CC
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+banner login ^C
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+!
+line con 0
+ exec-timeout 15 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ transport input telnet
+!
+no scheduler allocate
+!
+end
+
+
+R1#ping 2001:db8:acad:3::1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2001:DB8:ACAD:3::1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+R1#
+
+
+R1#sh ipv6 dhcp pool
+DHCPv6 pool: R1-STATELESS
+  DNS server: 2001:DB8:ACAD::254
+  Domain name: STATELESS.com
+  Active clients: 0
+
+R1#sh ipv6 neighbors
+IPv6 Address                              Age Link-layer Addr State Interface
+2001:DB8:ACAD:2::2                         17 5000.0006.0000  STALE Gi0/0
+2001:DB8:ACAD:1:7D94:4E38:A85A:2F55         0 5000.0001.0000  STALE Gi0/1
+FE80::59B2:6A4D:A4E3:3655                   1 5000.0001.0000  DELAY Gi0/1
+
+!
+interface GigabitEthernet0/0
+ description to R2
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:DB8:ACAD:2::/64 eui-64
+!
+interface GigabitEthernet0/1
+ description to S1
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:DB8:ACAD:1::/64 eui-64
+ ipv6 nd other-config-flag
+ ipv6 dhcp server R1-STATELESS
+!
+
+R1#sh ipv6 dhcp pool
+DHCPv6 pool: R1-STATELESS
+  DNS server: 2001:DB8:ACAD::254
+  Domain name: STATELESS.com
+  Active clients: 0
+DHCPv6 pool: R2-STATEFUL
+  Address allocation prefix: 2001:DB8:ACAD:3:AAA::/80 valid 172800 preferred 86400 (0 in use, 0 conflicts)
+  DNS server: 2001:DB8:ACAD::254
+  Domain name: STATEFUL.com
+  Active clients: 0
+R1#
+
+!
+interface GigabitEthernet0/0
+ description to R2
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:DB8:ACAD:2::/64 eui-64
+ ipv6 dhcp server R2-STATEFUL
+end
+
+
+
+

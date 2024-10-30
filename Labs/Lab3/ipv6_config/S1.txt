@@ -1,0 +1,144 @@
+Press RETURN to get started.
+
+C
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+
+S1>en
+Password:
+S1#sh run
+Building configuration...
+
+Current configuration : 3533 bytes
+!
+! Last configuration change at 15:45:56 MSK Tue Oct 1 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service compress-config
+!
+hostname S1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 4 06YFDUHH61wAE/kLkDq9BGho1QM5EnRtoyr8cHAUg.2
+!
+username admin privilege 15 secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
+aaa new-model
+clock timezone MSK 3 0
+!
+!
+no ip domain-lookup
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+interface GigabitEthernet0/0
+ description to PC-A
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ description to R1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec ^C
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+
+banner login ^C
+#####################################################################
+#                                                                   #
+#                                                                   #
+#                                                                   #
+#                     Warning! Restricted Area!                     #
+#                 Unauthorized Access Is Prohibited!                #
+#                      Admins (812)555-44-33                        #
+#                                                                   #
+#                                                                   #
+#####################################################################
+^C
+!
+line con 0
+ exec-timeout 15 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input telnet
+!
+!
+end
+
+S1#
